@@ -4,27 +4,24 @@ ip=$(ip -4 addr show enp0s3 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
 clear
 
-
 echo ""
 echo ""
 echo "------------------------------------------------------------------"
 echo ""
-echo " 		 ██████╗ ██╗  ██╗ ██████╗  ██████╗ "
-echo "		██╔═████╗╚██╗██╔╝██╔═████╗██╔═████╗"
-echo "		██║██╔██║ ╚███╔╝ ██║██╔██║██║██╔██║"
-echo "		████╔╝██║ ██╔██╗ ████╔╝██║████╔╝██║"
-echo "		╚██████╔╝██╔╝ ██╗╚██████╔╝╚██████╔╝"
-echo "		 ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ "
-echo "                                 
+echo "       ██████╗ ██╗  ██╗ ██████╗  ██████╗ "
+echo "      ██╔═████╗╚██╗██╔╝██╔═████╗██╔═████╗"
+echo "      ██║██╔██║ ╚███╔╝ ██║██╔██║██║██╔██║"
+echo "      ████╔╝██║ ██╔██╗ ████╔╝██║████╔╝██║"
+echo "      ╚██████╔╝██╔╝ ██╗╚██████╔╝╚██████╔╝"
+echo "       ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ "
 echo ""
 echo "------------------------------------------------------------------"
 echo ""
-echo "	 APPLIED OFFENSIVE INDUSTRIAL CYBERSECURITY - LAB "
+echo "   APPLIED OFFENSIVE INDUSTRIAL CYBERSECURITY - LAB "
 echo ""
 echo "------------------------------------------------------------------"
 
 # stop mqtt broker to avoid interference with other exercises
-#sudo /etc/init.d/mosquitto stop > /dev/null 2>&1
 sudo /etc/init.d/mosquitto stop > /dev/null 2>&1
 
 sleep 0.25
@@ -70,10 +67,10 @@ s7300() {
   nohup sudo python3 -m http.server 80 > /dev/null 2>&1 &
   cd ~
   sudo ./snap7/examples/cpp/x86_64-linux/server $ip
- 
 }
 
-s71500() {  echo "[!] Reboot your VM when you're done with this emulation"
+s71500() {
+  echo "[!] Reboot your VM when you're done with this emulation"
   sleep 1
   echo "[*] Applying S7-1500 Profile"
   sudo cp ~/snap7/build/bin/x86_64-linux/libsnap7.so-1500 /usr/lib/libsnap7.so
@@ -99,7 +96,6 @@ ab1756() {
   echo "[+] Emulating 1756-L61/B LOGIX5561 on "$ip
   echo ""
   enip_server -w 0.0.0.0:8080 -S -v
-
 }
 
 condef() {  
@@ -108,7 +104,6 @@ condef() {
   echo "[+] Starting Conpot Default Template on "$ip
   echo ""
   conpot -f --template default
-
 }
 
 congas() {  
@@ -117,7 +112,6 @@ congas() {
   echo "[+] Emulating TLS-350 on "$ip
   echo ""
   conpot -f --template guardian_ast
-
 }
 
 coniec() {  
@@ -129,7 +123,6 @@ coniec() {
   nohup sudo python3 -m http.server 80 > /dev/null 2>&1 &
   cd ~
   conpot -f --template IEC104
-
 }
 
 modicon() {  
@@ -139,7 +132,6 @@ modicon() {
   echo ""
   cd ~
   ./pymodbus/examples/server_payload.py --port 502 --log info
-
 }
 
 mqtt() {  
@@ -151,7 +143,6 @@ mqtt() {
   echo "[+] Publishing to "$ip
   cd ~
   ./otpublisher.sh
-
 }
 
 hmi() {  
@@ -169,7 +160,7 @@ hmi() {
 hmipw() {  
   echo "[!] Reboot your VM when you're done with this emulation"
   sleep 1
-  echo "[+] Emulating Simatic KTP 700 HMI Sm@rt Server with passwort protection on "$ip
+  echo "[+] Emulating Simatic KTP 700 HMI Sm@rt Server with password protection on "$ip
   Xvfb :1 -screen 0 1024x754x24 &
   sudo nc -l -k -p 102 &
   echo ""
@@ -179,20 +170,18 @@ hmipw() {
 }
 
 otnet() {
-  echo "[!]Reboot your VM when you're done with this emulation"
+  echo "[!] Reboot your VM when you're done with this emulation"
   sleep 1
   sudo pkill farpd
   sudo pkill honeyd
   echo "[*] Creating hosts and spawning OT network"
   echo ""
   sudo honeyd -f ot.conf 10.2.0.50-10.2.0.71
-  #sudo nohup honeyd -f ot.conf 10.2.0.50-10.2.0.71 > /dev/null 2>&1 &
   sleep 5
   echo ""
   echo "[*] Starting Forwarding and Routing Protocol Daemon for OT network"
   echo ""
   sudo farpd 10.2.0.50-10.2.0.71
-  #sudo nohup farpd 10.2.0.50-10.2.0.71 > /dev/null 2>&1 &
   sleep 2
   echo ""
   echo "[+] OT network emulation ready"
@@ -229,7 +218,6 @@ reboot() {
   sudo reboot
 }
 
-
 echo ""
 echo -n "[i] Choose a system to emulate: "
 read option
@@ -247,6 +235,5 @@ case $option in
   b) BAC ;;
   c) OPCUA ;;
   o) otnet ;;
-
   *) echo "[!] Invalid option. Quitting..." ;;
 esac
