@@ -66,7 +66,7 @@ s7300() {
   echo "[+] Emulating S7-300 PLC on "$ip
   echo ""
   cd ~
-  cd ~/oism/s7300/
+  cd ~/aoic/s7300/
   nohup sudo python3 -m http.server 80 > /dev/null 2>&1 &
   cd ~
   sudo ./snap7/examples/cpp/x86_64-linux/server $ip
@@ -81,7 +81,7 @@ s71500() {  echo "[!] Reboot your VM when you're done with this emulation"
   echo "[+] Emulating S7-1500 PLC on "$ip
   echo ""
   cd ~
-  cd ~/oism/s71500/
+  cd ~/aoic/s71500/
   nohup sudo python3 -m http.server 80 > /dev/null 2>&1 &
   cd ~
   sudo ./snap7/examples/cpp/x86_64-linux/server $ip
@@ -125,7 +125,7 @@ coniec() {
   sleep 1
   echo "[+] Emulating IEC-104 Substation on "$ip
   echo ""
-  cd ~/oism/iec104/
+  cd ~/aoic/iec104/
   nohup sudo python3 -m http.server 80 > /dev/null 2>&1 &
   cd ~
   conpot -f --template IEC104
@@ -162,7 +162,7 @@ hmi() {
   sudo nc -l -k -p 102 &
   echo ""
   sleep 2
-  DISPLAY=:1 feh --fullscreen --no-hint ~/oism/HMI/screen.png &
+  DISPLAY=:1 feh --fullscreen --no-hint ~/aoic/HMI/screen.png &
   x11vnc -display :1 -desktop "SVEHMI" -rfbport 5900 -forever -shared
 }
 
@@ -174,7 +174,7 @@ hmipw() {
   sudo nc -l -k -p 102 &
   echo ""
   sleep 2
-  DISPLAY=:1 feh --fullscreen --no-hint ~/oism/HMI/screen.png &
+  DISPLAY=:1 feh --fullscreen --no-hint ~/aoic/HMI/screen.png &
   x11vnc -display :1 -rfbauth ~/.vnc/passwd -desktop "SVEHMI" -rfbport 5900 -forever -shared
 }
 
@@ -208,7 +208,7 @@ BAC() {
   sleep 1
   echo "[+] Emulating BACnet Subway Station Controller on "$ip
   echo ""
-  cd ~/oism/
+  cd ~/aoic/
   python3 BACnet_Subway.py $ip
 }
 
@@ -217,7 +217,7 @@ OPCUA() {
   sleep 1
   echo "[+] Emulating OPC UA Siemens Server on "$ip
   echo ""
-  cd ~/oism/
+  cd ~/aoic/
   python3 OPC.py
 }
 
