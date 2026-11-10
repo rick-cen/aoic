@@ -103,7 +103,7 @@ condef() {
   sleep 1
   echo "[+] Starting Conpot Default Template on "$ip
   echo ""
-  conpot -f --template default
+  /opt/aoic/envs/conpot/bin/conpot -f --template default
 }
 
 congas() {  
@@ -111,7 +111,7 @@ congas() {
   sleep 1
   echo "[+] Emulating TLS-350 on "$ip
   echo ""
-  conpot -f --template guardian_ast
+  /opt/aoic/envs/conpot/bin/conpot -f --template guardian_ast
 }
 
 coniec() {  
@@ -122,7 +122,7 @@ coniec() {
   cd ~/aoic/iec104/
   nohup sudo python3 -m http.server 80 > /dev/null 2>&1 &
   cd ~
-  conpot -f --template IEC104
+  /opt/aoic/envs/conpot/bin/conpot -f --template IEC104
 }
 
 modicon() {  
@@ -130,8 +130,9 @@ modicon() {
   sleep 1
   echo "[+] Emulating Modbus Modicon Device on "$ip
   echo ""
+  cd ~/pymodbus/examples/
+  sudo /opt/aoic/envs/pymodbus/bin/python server_payload.py --port 502 --log info
   cd ~
-  ./pymodbus/examples/server_payload.py --port 502 --log info
 }
 
 mqtt() {  
@@ -198,7 +199,7 @@ BAC() {
   echo "[+] Emulating BACnet Subway Station Controller on "$ip
   echo ""
   cd ~/aoic/
-  python3 BACnet_Subway.py $ip
+  /opt/aoic/envs/bacpypes/bin/python3 BACnet_Subway.py $ip
 }
 
 OPCUA() {  
@@ -207,7 +208,7 @@ OPCUA() {
   echo "[+] Emulating OPC UA Siemens Server on "$ip
   echo ""
   cd ~/aoic/
-  python3 OPC.py
+  /opt/aoic/envs/opcua/bin/python3 OPC.py
 }
 
 reboot() {
